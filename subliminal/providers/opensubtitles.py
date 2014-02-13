@@ -15,7 +15,7 @@ from ..subtitle import Subtitle, decode, fix_line_endings, is_valid_subtitle, co
 from ..video import Episode, Movie
 
 
-logger = logging.getLogger(__name__)
+logger = logging.getLogger("subliminal")
 
 
 class OpenSubtitlesSubtitle(Subtitle):
@@ -47,7 +47,7 @@ class OpenSubtitlesSubtitle(Subtitle):
     def compute_matches(self, video):
         matches = set()
         # episode
-        if isinstance(video, Episode) and self.movie_kind == 'episode':
+        if self.movie_kind == 'episode':
             # series
             if video.series and self.series_name.lower() == video.series.lower():
                 matches.add('series')
@@ -60,7 +60,7 @@ class OpenSubtitlesSubtitle(Subtitle):
             # guess
             matches |= compute_guess_matches(video, guessit.guess_episode_info(self.movie_release_name + '.mkv'))
         # movie
-        elif isinstance(video, Movie) and self.movie_kind == 'movie':
+        elif self.movie_kind == 'movie':
             # year
             if video.year and self.movie_year == video.year:
                 matches.add('year')
@@ -83,7 +83,8 @@ class OpenSubtitlesSubtitle(Subtitle):
 
 class OpenSubtitlesProvider(Provider):
     languages = {babelfish.Language.fromopensubtitles(l) for l in babelfish.language_converters['opensubtitles'].codes}
-
+    url = 'http://www.opensubtitles.org/'
+    
     def __init__(self):
         self.server = ServerProxy('http://api.opensubtitles.org/xml-rpc', transport=TimeoutTransport(10))
         self.token = None

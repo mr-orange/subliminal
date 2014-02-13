@@ -16,7 +16,7 @@ from ..subtitle import Subtitle, decode, fix_line_endings, is_valid_subtitle, co
 from ..video import Episode, Movie
 
 
-logger = logging.getLogger(__name__)
+logger = logging.getLogger("subliminal")
 babelfish.language_converters.register('podnapisi = subliminal.converters.podnapisi:PodnapisiConverter')
 
 
@@ -38,7 +38,7 @@ class PodnapisiSubtitle(Subtitle):
     def compute_matches(self, video):
         matches = set()
         # episode
-        if isinstance(video, Episode):
+        if self.movie_kind == 'episode':
             # series
             if video.series and self.series.lower() == video.series.lower():
                 matches.add('series')
@@ -52,7 +52,7 @@ class PodnapisiSubtitle(Subtitle):
             for release in self.releases:
                 matches |= compute_guess_matches(video, guessit.guess_episode_info(release + '.mkv'))
         # movie
-        elif isinstance(video, Movie):
+        elif self.movie_kind == 'movie':
             # title
             if video.title and self.title.lower() == video.title.lower():
                 matches.add('title')
@@ -68,7 +68,7 @@ class PodnapisiSubtitle(Subtitle):
 class PodnapisiProvider(Provider):
     languages = {babelfish.Language.frompodnapisi(l) for l in babelfish.language_converters['podnapisi'].codes}
     video_types = (Episode, Movie)
-    server = 'http://simple.podnapisi.net'
+    server = url = 'http://simple.podnapisi.net'
     link_re = re.compile('^.*(?P<link>/ppodnapisi/download/i/\d+/k/.*$)')
 
     def initialize(self):

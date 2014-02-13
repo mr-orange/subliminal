@@ -10,7 +10,7 @@ import enzyme
 import guessit
 
 
-logger = logging.getLogger(__name__)
+logger = logging.getLogger("subliminal")
 
 #: Video extensions
 VIDEO_EXTENSIONS = ('.3g2', '.3gp', '.3gp2', '.3gpp', '.60d', '.ajp', '.asf', '.asx', '.avchd', '.avi', '.bik',

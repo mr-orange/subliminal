@@ -13,7 +13,7 @@ from ..subtitle import Subtitle, decode, fix_line_endings, is_valid_subtitle, co
 from ..video import Episode
 
 
-logger = logging.getLogger(__name__)
+logger = logging.getLogger("subliminal")
 babelfish.language_converters.register('addic7ed = subliminal.converters.addic7ed:Addic7edConverter')
 
 
@@ -74,7 +74,7 @@ class Addic7edProvider(Provider):
                            'nld', 'nor', 'pol', 'por', 'ron', 'rus', 'slk', 'slv', 'spa', 'sqi', 'srp', 'swe', 'tha',
                            'tur', 'ukr', 'vie', 'zho']}
     video_types = (Episode,)
-    server = 'http://www.addic7ed.com'
+    server = url = 'http://www.addic7ed.com'
 
     def __init__(self, username=None, password=None):
         if username is not None and password is None or username is None and password is not None:

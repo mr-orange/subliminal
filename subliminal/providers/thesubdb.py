@@ -9,7 +9,7 @@ from ..exceptions import InvalidSubtitle, ProviderError
 from ..subtitle import Subtitle, decode, fix_line_endings, is_valid_subtitle
 
 
-logger = logging.getLogger(__name__)
+logger = logging.getLogger("subliminal")
 
 
 class TheSubDBSubtitle(Subtitle):
@@ -30,7 +30,8 @@ class TheSubDBSubtitle(Subtitle):
 class TheSubDBProvider(Provider):
     languages = {babelfish.Language.fromalpha2(l) for l in ['en', 'es', 'fr', 'it', 'nl', 'pl', 'pt', 'ro', 'sv', 'tr']}
     required_hash = 'thesubdb'
-
+    url = 'http://thesubdb.com/'
+    
     def initialize(self):
         self.session = requests.Session()
         self.session.headers = {'User-Agent': 'SubDB/1.0 (subliminal/%s; https://github.com/Diaoul/subliminal)' %

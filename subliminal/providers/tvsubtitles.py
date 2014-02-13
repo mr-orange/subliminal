@@ -16,7 +16,7 @@ from ..subtitle import Subtitle, decode, fix_line_endings, is_valid_subtitle, co
 from ..video import Episode
 
 
-logger = logging.getLogger(__name__)
+logger = logging.getLogger("subliminal")
 babelfish.language_converters.register('tvsubtitles = subliminal.converters.tvsubtitles:TVsubtitlesConverter')
 
 
@@ -77,7 +77,7 @@ class TVsubtitlesProvider(Provider):
                  for l in ['ara', 'bul', 'ces', 'dan', 'deu', 'ell', 'eng', 'fin', 'fra', 'hun', 'ita', 'jpn', 'kor',
                            'nld', 'pol', 'por', 'ron', 'rus', 'spa', 'swe', 'tur', 'ukr', 'zho']}
     video_types = (Episode,)
-    server = 'http://www.tvsubtitles.net'
+    server = url = 'http://www.tvsubtitles.net'
     episode_id_re = re.compile('^episode-\d+\.html$')
     subtitle_re = re.compile('^\/subtitle-\d+\.html$')
     link_re = re.compile('^(?P<series>[A-Za-z0-9 \'.]+).*\((?P<first_year>\d{4})-\d{4}\)$')
