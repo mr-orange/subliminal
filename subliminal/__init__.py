@@ -15,3 +15,8 @@ from .video import VIDEO_EXTENSIONS, SUBTITLE_EXTENSIONS, Video, Episode, Movie,
 
 
 logging.getLogger(__name__).addHandler(logging.NullHandler())
+
+try:
+    cache_region.configure('dogpile.cache.memory')
+except:
+    logger.log("Error occurred on subliminal cache configuration: " + traceback.format_exc(), logger.ERROR)
