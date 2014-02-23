@@ -187,7 +187,7 @@ def scan_subtitle_languages(path):
     return subtitles
 
 
-def scan_video(path, subtitles=True, embedded_subtitles=True):
+def scan_video(path, release_name=None, subtitles=True, embedded_subtitles=True):
     """Scan a video and its subtitle languages from a video `path`
 
     :param string path: absolute path to the video
@@ -200,7 +200,8 @@ def scan_video(path, subtitles=True, embedded_subtitles=True):
     """
     dirpath, filename = os.path.split(path)
     logger.info('Scanning video %r in %r', filename, dirpath)
-    video = Video.fromguess(path, guessit.guess_file_info(path, 'autodetect'))
+    release_name = release_name or path
+    video = Video.fromguess(path, guessit.guess_file_info(release_name, 'autodetect'))
     video.size = os.path.getsize(path)
     if video.size > 10485760:
         logger.debug('Size is %d', video.size)
